@@ -1,0 +1,30 @@
+[
+  {
+    "version": "main",
+    "url": "https://ulrikpedersen.github.io/domomet/main/"
+  },
+  {
+    "version": ".devcontainer",
+    "url": "https://ulrikpedersen.github.io/domomet/.devcontainer/"
+  },
+  {
+    "version": ".github",
+    "url": "https://ulrikpedersen.github.io/domomet/.github/"
+  },
+  {
+    "version": ".vscode",
+    "url": "https://ulrikpedersen.github.io/domomet/.vscode/"
+  },
+  {
+    "version": "docs",
+    "url": "https://ulrikpedersen.github.io/domomet/docs/"
+  },
+  {
+    "version": "src",
+    "url": "https://ulrikpedersen.github.io/domomet/src/"
+  },
+  {
+    "version": "tests",
+    "url": "https://ulrikpedersen.github.io/domomet/tests/"
+  }
+]
