@@ -4,6 +4,12 @@ __pycache__/
 
 # C extensions
 *.so
+*.dll
+*.dylib
+*.a
+
+# OS cruft
+.DS_Store
 
 # Distribution / packaging
 .Python

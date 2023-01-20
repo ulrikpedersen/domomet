@@ -3,25 +3,16 @@ homeapp
 
 |code_ci| |docs_ci| |coverage| |pypi_version| |license|
 
-.. note::
-
-    This project contains template code only. For documentation on how to
-    adopt this skeleton project see
-    https://ulrikpedersen.github.io/homeapp-cli
-
-This is where you should write a short paragraph that describes what your module does,
-how it does it, and why people should use it.
+This is my own Home monitoring app.
 
 ============== ==============================================================
-PyPI           ``pip install homeapp``
+pip            ``pip install git+https://github.com/ulrikpedersen/homeapp.git``
 Source code    https://github.com/ulrikpedersen/homeapp
 Documentation  https://ulrikpedersen.github.io/homeapp
 Releases       https://github.com/ulrikpedersen/homeapp/releases
 ============== ==============================================================
 
-This is where you should put some images or code snippets that illustrate
-some relevant examples. If it is a library then you might put some
-introductory code here:
+Example use:
 
 .. code-block:: python
 
