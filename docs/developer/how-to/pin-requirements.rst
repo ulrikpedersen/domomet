@@ -31,8 +31,8 @@ Finding the lock files
 Every release of the project will have a set of requirements files published
 as release assets.
 
-For example take a look at the release page for homeapp-cli here:
-https://github.com/ulrikpedersen/homeapp-cli/releases/tag/3.3.0
+For example take a look at the release page for domomet-cli here:
+https://github.com/ulrikpedersen/domomet-cli/releases/tag/3.3.0
 
 There is a list of requirements*.txt files showing as assets on the release.
 

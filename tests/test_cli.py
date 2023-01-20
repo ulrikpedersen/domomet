@@ -1,9 +1,9 @@
 import subprocess
 import sys
 
-from homeapp import __version__
+from domomet import __version__
 
 
 def test_cli_version():
-    cmd = [sys.executable, "-m", "homeapp", "--version"]
+    cmd = [sys.executable, "-m", "domomet", "--version"]
     assert subprocess.check_output(cmd).decode().strip() == __version__

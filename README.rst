@@ -1,4 +1,4 @@
-homeapp
+domomet
 ===========================
 
 |code_ci| |docs_ci| |coverage| |pypi_version| |license|
@@ -6,38 +6,38 @@ homeapp
 This is my own Home monitoring app.
 
 ============== ==============================================================
-pip            ``pip install git+https://github.com/ulrikpedersen/homeapp.git``
-Source code    https://github.com/ulrikpedersen/homeapp
-Documentation  https://ulrikpedersen.github.io/homeapp
-Releases       https://github.com/ulrikpedersen/homeapp/releases
+pip            ``pip install git+https://github.com/ulrikpedersen/domomet.git``
+Source code    https://github.com/ulrikpedersen/domomet
+Documentation  https://ulrikpedersen.github.io/domomet
+Releases       https://github.com/ulrikpedersen/domomet/releases
 ============== ==============================================================
 
 Example use:
 
 .. code-block:: python
 
-    from homeapp import __version__
+    from domomet import __version__
 
-    print(f"Hello homeapp {__version__}")
+    print(f"Hello domomet {__version__}")
 
 Or if it is a commandline tool then you might put some example commands here::
 
-    $ python -m homeapp --version
+    $ python -m domomet --version
 
-.. |code_ci| image:: https://github.com/ulrikpedersen/homeapp/actions/workflows/code.yml/badge.svg?branch=main
-    :target: https://github.com/ulrikpedersen/homeapp/actions/workflows/code.yml
+.. |code_ci| image:: https://github.com/ulrikpedersen/domomet/actions/workflows/code.yml/badge.svg?branch=main
+    :target: https://github.com/ulrikpedersen/domomet/actions/workflows/code.yml
     :alt: Code CI
 
-.. |docs_ci| image:: https://github.com/ulrikpedersen/homeapp/actions/workflows/docs.yml/badge.svg?branch=main
-    :target: https://github.com/ulrikpedersen/homeapp/actions/workflows/docs.yml
+.. |docs_ci| image:: https://github.com/ulrikpedersen/domomet/actions/workflows/docs.yml/badge.svg?branch=main
+    :target: https://github.com/ulrikpedersen/domomet/actions/workflows/docs.yml
     :alt: Docs CI
 
-.. |coverage| image:: https://codecov.io/gh/ulrikpedersen/homeapp/branch/main/graph/badge.svg
-    :target: https://codecov.io/gh/ulrikpedersen/homeapp
+.. |coverage| image:: https://codecov.io/gh/ulrikpedersen/domomet/branch/main/graph/badge.svg
+    :target: https://codecov.io/gh/ulrikpedersen/domomet
     :alt: Test Coverage
 
-.. |pypi_version| image:: https://img.shields.io/pypi/v/homeapp.svg
-    :target: https://pypi.org/project/homeapp
+.. |pypi_version| image:: https://img.shields.io/pypi/v/domomet.svg
+    :target: https://pypi.org/project/domomet
     :alt: Latest PyPI version
 
 .. |license| image:: https://img.shields.io/badge/License-Apache%202.0-blue.svg
@@ -48,4 +48,4 @@ Or if it is a commandline tool then you might put some example commands here::
     Anything below this line is used when viewing README.rst and will be replaced
     when included in index.rst
 
-See https://ulrikpedersen.github.io/homeapp for more detailed documentation.
+See https://ulrikpedersen.github.io/domomet for more detailed documentation.

@@ -14,13 +14,13 @@ The documentation is split into 2 sections:
         :link: user/index
         :link-type: doc
 
-        The User Guide contains documentation on how to install and use homeapp.
+        The User Guide contains documentation on how to install and use domomet.
 
     .. grid-item-card:: :material-regular:`code;4em`
         :link: developer/index
         :link-type: doc
 
-        The Developer Guide contains documentation on how to develop and contribute changes back to homeapp.
+        The Developer Guide contains documentation on how to develop and contribute changes back to domomet.
 
 .. toctree::
     :hidden:

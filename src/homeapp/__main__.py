@@ -11,6 +11,6 @@ def main(args=None):
     args = parser.parse_args(args)
 
 
-# test with: python -m homeapp
+# test with: python -m domomet
 if __name__ == "__main__":
     main()

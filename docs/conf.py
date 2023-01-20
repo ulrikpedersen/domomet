@@ -10,15 +10,15 @@ from subprocess import check_output
 
 import requests
 
-import homeapp
+import domomet
 
 # -- General configuration ------------------------------------------------
 
 # General information about the project.
-project = "homeapp"
+project = "domomet"
 
 # The full version, including alpha/beta/rc tags.
-release = homeapp.__version__
+release = domomet.__version__
 
 # The short X.Y version.
 if "+" in release:
