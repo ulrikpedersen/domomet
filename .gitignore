@@ -11,6 +11,9 @@ __pycache__/
 # OS cruft
 .DS_Store
 
+# secrets and local configuration
+*.env
+
 # Distribution / packaging
 .Python
 env/
