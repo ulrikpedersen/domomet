@@ -12,7 +12,8 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
 ]
 description = "My home monitoring app"
-dependencies = [] # Add project dependencies here, e.g. ["click", "numpy"]
+# Add project dependencies here:
+dependencies = ["python-dotenv", "influxdb-client", "pyRFXtrx"]
 dynamic = ["version"]
 license.file = "LICENSE"
 readme = "README.rst"
