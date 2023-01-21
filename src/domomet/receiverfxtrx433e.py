@@ -25,16 +25,6 @@ class CallbackHandler:
         self.callcounter: int = 0
         self.idb_writer = idb_writer
 
-    # def print_callback(self, event: RFXtrx.SensorEvent):
-    #     self.callcounter += 1
-    #     print(f"{time.ctime()} - called {self.callcounter} times")
-    #     print(event.values)
-    #     data = dict(event.values)
-    #     print(data)
-    #     datapoint = Point("Electricity").field("power_usage", data['Energy usage']).field("total_usage", data['Total usage'])
-    #     self.idb_writer.write(bucket=_influxdb_bucket, record=datapoint)
-    #     print(datapoint)
-
     def callback_event(self, event: RFXtrx.SensorEvent) -> None:
         print("===== callback_event ======")
         self.callcounter += 1
