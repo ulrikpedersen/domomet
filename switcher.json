@@ -4,6 +4,10 @@
     "url": "https://ulrikpedersen.github.io/domomet/main/"
   },
   {
+    "version": "0.1.1",
+    "url": "https://ulrikpedersen.github.io/domomet/0.1.1/"
+  },
+  {
     "version": ".devcontainer",
     "url": "https://ulrikpedersen.github.io/domomet/.devcontainer/"
   },
