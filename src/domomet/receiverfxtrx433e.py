@@ -16,6 +16,7 @@ _influxdb_bucket = "Energy"
 
 
 def on_exit(db_client: InfluxDBClient, write_api: WriteApi) -> None:
+    print("Closing connections")
     write_api.close()
     db_client.close()
 
@@ -75,6 +76,7 @@ def main():
 
     _influxdb_TOKEN = os.getenv("INFLUXDB_TOKEN")
     _influxdb_url = os.getenv("INFLUXDB_URL")
+    logging.debug(f"IDB URL: {_influxdb_url}")
     try:
         with InfluxDBClient(
             url=_influxdb_url, token=_influxdb_TOKEN, org=_influxdb_org
@@ -90,7 +92,7 @@ def main():
 
                 while True:
                     # print(core.sensors())
-                    print(".", end="")
+                    print(".", end="", flush=True)
                     time.sleep(2)
                 print("")
     except InfluxDBError as e:
