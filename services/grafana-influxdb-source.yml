@@ -11,4 +11,4 @@ datasources:
       httpMode: POST
       httpHeaderName1: "Authorization"
     secureJsonData:
-      httpHeaderValue1: "Token <replace this with secret token>"
+      httpHeaderValue1: "Token $INFLUXDB_TOKEN"

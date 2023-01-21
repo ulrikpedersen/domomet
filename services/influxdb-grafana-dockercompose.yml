@@ -27,9 +27,11 @@ services:
       - grafana-config:/etc/grafana
     depends_on:
       - influxdb
-    environment:
-      - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=adminadmin22
+    # environment:
+    #   - GF_SECURITY_ADMIN_USER=admin
+    #   - GF_SECURITY_ADMIN_PASSWORD=somethingsecret
+    env_file:
+      - stack.env
 
 volumes:
   influxdb-storage:

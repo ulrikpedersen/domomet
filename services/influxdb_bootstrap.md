@@ -28,5 +28,17 @@ with the stack name prefix: <stackname>_<volumename>
 So it's easier to just define the boostrap environment variables in a .env
 file that can be loaded just for the initial startup of the stack.
 
+The grafana instance need to know about the influxdb database and for this you need to generate an API token on the Influxdb webUI. Copy that token into a `idb-token.env` file:
+
+```env
+INFLUXDB_TOKEN=blahblahblahblah==
+```
+
+Then you need to copy the `services/grafana-influxdb-source.yml` file into the `grafana-config` docker volume to the directory `provisioning/datasources/` for example like this:
+
+```shell
+docker run --rm -v $PWD:/source -v grafana-config:/dest -w /source alpine cp grafana-influxdb-source.yml /dest/provisioning/datasources
+```
+
 
 
