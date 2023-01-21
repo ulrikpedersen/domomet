@@ -1,0 +1,41 @@
+version: '2'
+services:
+  influxdb:
+    image: influxdb:latest
+    ports:
+      - '8086:8086'
+    volumes:
+      - influxdb-storage:/var/lib/influxdb2
+      - influxdb-config:/etc/influxdb2
+    # environment should be set in an .env file that can be
+    # uploaded to portainer where it is referenced as a 'stack.env'
+    # # Only required on first start:
+    #   - DOCKER_INFLUXDB_INIT_MODE=setup
+    #   - DOCKER_INFLUXDB_INIT_USERNAME=somethingsecret
+    #   - DOCKER_INFLUXDB_INIT_PASSWORD=somethingsecret
+    #   - DOCKER_INFLUXDB_INIT_ORG=Household
+    #   - DOCKER_INFLUXDB_INIT_BUCKET=Energy
+    env_file:
+      - stack.env
+
+  grafana:
+    image: grafana/grafana-oss:latest
+    ports:
+      - '3000:3000'
+    volumes:
+      - grafana-storage:/var/lib/grafana
+      - grafana-config:/etc/grafana
+    depends_on:
+      - influxdb
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=adminadmin22
+
+volumes:
+  influxdb-storage:
+  influxdb-config: # chronograf-storage:
+
+  grafana-storage:
+  grafana-config:
+
+
