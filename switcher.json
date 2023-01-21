@@ -8,10 +8,6 @@
     "url": "https://ulrikpedersen.github.io/domomet/.devcontainer/"
   },
   {
-    "version": ".github",
-    "url": "https://ulrikpedersen.github.io/domomet/.github/"
-  },
-  {
     "version": ".vscode",
     "url": "https://ulrikpedersen.github.io/domomet/.vscode/"
   },
