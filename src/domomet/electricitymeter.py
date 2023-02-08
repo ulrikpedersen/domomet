@@ -20,7 +20,7 @@ class OwlMeter(Publisher):
     def start_collecting(self) -> None:
         try:
             self._rfxcomm = RFXtrx.Core(
-                self._rfxcomm_serial_tty, self._callback_rfxtrx433, modes=["Oregon"]
+                self._rfxcomm_serial_tty, self._callback_rfxtrx433, modes=["oregon"]
             )
         except Exception as e:
             logging.exception(
@@ -38,7 +38,7 @@ class OwlMeter(Publisher):
         try:
             reading: dict = self._measurements.get(block=True, timeout=timeout)
         except queue.Empty:
-            msg = f"Timeout {timeout} min: no readings from Owl. Disconnected."
+            msg = f"Timeout {timeout}sec. No readings from Owl. Disconnected."
             logging.exception(msg)
             raise TimeoutError(msg)
         return reading

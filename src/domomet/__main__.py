@@ -19,6 +19,7 @@ def main(args=None):
     influxdb_url = os.getenv("INFLUXDB_URL")
     logging.debug(f"IDB URL: {influxdb_url}")
     owl = electricitymeter.OwlMeter()
+    owl.start_collecting()
     idbrec = recorder.InfluxDbRecorder(owl)
 
     return idbrec.run(influxdb_TOKEN, influxdb_url)
