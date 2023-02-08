@@ -1,5 +1,6 @@
 import logging
 import time
+from pprint import pformat
 
 from influxdb_client import InfluxDBClient
 from influxdb_client.client.exceptions import InfluxDBError
@@ -29,8 +30,11 @@ class InfluxDbRecorder:
                     write_type=WriteType.synchronous,
                 ) as idb_writer:
                     while True:
-                        measurement: dict = self._sensor.get_reading()
-                        print(".", end="", flush=True)
+                        try:
+                            measurement: dict = self._sensor.get_reading()
+                        except TimeoutError:
+                            continue
+                        logging.debug(f"Got measurement: \n{pformat(measurement)}")
                         idb_writer.write(
                             self._influxdb_bucket,
                             self._influxdb_org,
