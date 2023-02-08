@@ -41,7 +41,6 @@ class InfluxDbRecorder:
                             record=measurement,
                         )
                         time.sleep(2)
-                    print("")
         except InfluxDBError as e:
             logging.exception("Influx DB error caught. Re-raising")
             raise e

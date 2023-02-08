@@ -10,6 +10,11 @@ __all__ = ["main"]
 
 
 def main(args=None):
+    logging.basicConfig(
+        level=logging.DEBUG,
+        format="'%(asctime)s - %(name)s - %(levelname)s - %(message)s'",
+        datefmt="%d/%m/%Y %H:%M:%S",
+    )
     parser = ArgumentParser()
     parser.add_argument("--version", action="version", version=__version__)
     args = parser.parse_args(args)
