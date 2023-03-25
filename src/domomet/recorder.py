@@ -11,7 +11,11 @@ from . import sensor
 
 class InfluxDbRecorder:
     _influxdb_org = "Household"
-    _influxdb_bucket = "Energy"
+    # measurement -> bucket
+    _influxdb_measurement_buckets = {
+        "Electricity": "Energy",
+        "Temperature": "Environment",
+    }
 
     def __init__(self, sensor: sensor.Publisher) -> None:
         self._sensor = sensor
@@ -36,7 +40,9 @@ class InfluxDbRecorder:
                             continue
                         logging.debug(f"Got measurement: \n{pformat(measurement)}")
                         idb_writer.write(
-                            self._influxdb_bucket,
+                            self._influxdb_measurement_buckets[
+                                measurement["measurement"]
+                            ],
                             self._influxdb_org,
                             record=measurement,
                         )

@@ -4,7 +4,7 @@ from argparse import ArgumentParser
 
 from dotenv import load_dotenv
 
-from . import __version__, electricitymeter, recorder
+from . import __version__, recorder, wirelesssensor
 
 __all__ = ["main"]
 
@@ -23,9 +23,9 @@ def main(args=None):
     influxdb_TOKEN = os.getenv("INFLUXDB_TOKEN")
     influxdb_url = os.getenv("INFLUXDB_URL")
     logging.debug(f"IDB URL: {influxdb_url}")
-    owl = electricitymeter.OwlMeter()
-    owl.start_collecting()
-    idbrec = recorder.InfluxDbRecorder(owl)
+    meas = wirelesssensor.Measure()
+    meas.start_collecting()
+    idbrec = recorder.InfluxDbRecorder(meas)
 
     return idbrec.run(influxdb_TOKEN, influxdb_url)
 
