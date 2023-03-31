@@ -7,13 +7,13 @@ import RFXtrx
 
 from .sensor import Publisher
 
-SENSOR_LOCATIONS = {"01": "downstairs", "02": "downstairs", "03": "downstairs"}
+SENSOR_LOCATIONS = {"01": "bedroom", "02": "conservatory", "03": "garden"}
 
 
 class BresserHygrometerMeasurement:
     CALIBRATION_TABLE = {
         "01": {"temperature_offset": -0.3, "humidity_offset": 0.0},
-        "02": {"temperature_offset": 1.0, "humidity_offset": 0.0},
+        "02": {"temperature_offset": 1.0, "humidity_offset": 2.0},
         "03": {"temperature_offset": 1.0, "humidity_offset": 0.0},
     }
 
