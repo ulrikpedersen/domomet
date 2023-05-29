@@ -13,7 +13,8 @@ __all__ = ["main"]
 
 def main(args=None):
     log_level = os.getenv("DOMOMET_LOGLEVEL", default=logging.DEBUG)
-    if log_level not in logging.getLevelNamesMapping():
+    # if log_level not in logging.getLevelNamesMapping():  # only available from Python 3.11
+    if log_level not in ["CRITICAL", "ERROR", "WARNING", "INFO", "DEBUG", "NOTSET"]:
         log_level = logging.DEBUG
     logging.basicConfig(
         level=logging.DEBUG,
