@@ -33,7 +33,7 @@ def main(args=None):
                 record.hostname = ContextFilter.hostname
                 return True
 
-        syslog = SysLogHandler(address=env_syslog_address_port.split(":"))
+        syslog = SysLogHandler(address=tuple(env_syslog_address_port.split(":")))
         syslog.addFilter(ContextFilter())
         format = "%(asctime)s %(hostname)s DOMOMET: %(message)s"
         formatter = logging.Formatter(format, datefmt="%b %d %H:%M:%S")
