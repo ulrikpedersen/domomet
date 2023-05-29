@@ -156,11 +156,11 @@ class Measure(Publisher):
                 },
                 "time": datetime.datetime.now(datetime.timezone.utc),
             }
-            logging.debug(result)
+            # logging.debug(result)
         elif sensor_device.type_string.startswith("Rubicson"):
             # Temperature monitor device
             meas = BresserHygrometerMeasurement(event, acq_timestamp)
-            logging.debug(meas)
+            # logging.debug(meas)
             result = meas.to_influxdb_dict()
         logging.debug(result)
         return result

@@ -13,7 +13,8 @@ __all__ = ["main"]
 
 def main(args=None):
     log_level = os.getenv("DOMOMET_LOGLEVEL", default=logging.DEBUG)
-    # if log_level not in logging.getLevelNamesMapping():  # only available from Python 3.11
+    # only available from Python 3.11:
+    # if log_level not in logging.getLevelNamesMapping():
     if log_level not in ["CRITICAL", "ERROR", "WARNING", "INFO", "DEBUG", "NOTSET"]:
         log_level = logging.DEBUG
     logging.basicConfig(
@@ -49,10 +50,12 @@ def main(args=None):
     influxdb_TOKEN = os.getenv("INFLUXDB_TOKEN")
     influxdb_url = os.getenv("INFLUXDB_URL")
     logging.debug(f"IDB URL: {influxdb_url}")
+    logging.info("Connecting to wireless sensor")
     meas = wirelesssensor.Measure()
+    logging.info("Starting listening for measurements")
     meas.start_collecting()
     idbrec = recorder.InfluxDbRecorder(meas)
-
+    logging.info("Starting to record to influxdb")
     return idbrec.run(influxdb_TOKEN, influxdb_url)
 
 
