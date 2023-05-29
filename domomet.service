@@ -1,0 +1,12 @@
+[Unit]
+Description=Monitor home environment and energy consumption
+After=multi-user.target
+
+[Service]
+EnvironmentFile=/home/ulrik/domomet.env
+ExecStart=/home/ulrik/domomet-venv/bin/domomet
+Restart=always
+RestartSec=60s
+
+[Install]
+WantedBy=multi-user.target
