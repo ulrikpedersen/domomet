@@ -124,19 +124,21 @@ class Measure(Publisher):
     def _callback_rfxtrx433(self, event: RFXtrx.SensorEvent) -> None:
         reading = self._sensor_event_to_dict(event)
         try:
-            self._measurements.put(reading, block=False)
+            if reading is not None:
+                self._measurements.put(reading, block=False)
         except queue.Full:
             logging.exception(
                 "Owl measurement queue is full. Dropping data. Is consumer side stuck?"
             )
 
-    def _sensor_event_to_dict(self, event: RFXtrx.SensorEvent) -> dict:
+    def _sensor_event_to_dict(self, event: RFXtrx.SensorEvent) -> dict | None:
         acq_timestamp: datetime.datetime = datetime.datetime.now(datetime.timezone.utc)
         sensor_data: dict = event.values
         sensor_device: RFXtrx.RFXtrxDevice = event.device
         logging.debug(sensor_device)
         logging.debug(sensor_data)
 
+        result = None
         if sensor_device.type_string.startswith("ELEC"):
             # Energy meter measurement captured
             result = {
@@ -162,6 +164,8 @@ class Measure(Publisher):
             meas = BresserHygrometerMeasurement(event, acq_timestamp)
             # logging.debug(meas)
             result = meas.to_influxdb_dict()
+        else:
+            logging.warning(f"Unrecognised sensor device: {sensor_device.type_string}")
         logging.debug(result)
         return result
 
