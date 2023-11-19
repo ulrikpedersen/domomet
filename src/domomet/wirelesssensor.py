@@ -156,8 +156,7 @@ class Measure(Publisher):
             return
         sensor_data: dict = event.values
         sensor_device: RFXtrx.RFXtrxDevice = event.device
-        logging.debug(sensor_device)
-        logging.debug(sensor_data)
+        logging.info(f"Received Event. Device: {sensor_device} Data: {sensor_data}")
 
         result = None
         if sensor_device.type_string.lower().startswith("elec"):
