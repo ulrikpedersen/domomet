@@ -179,6 +179,13 @@ class Measure(Publisher):
                 "time": datetime.datetime.now(datetime.timezone.utc),
             }
             # logging.debug(result)
+            # SANITY DATA CHECK: sometimes the OWL report power at or above 1MW which
+            # is unlikely to be real but really mess with the stats in the DB.
+            # Discard the data point if higher than 20KW
+            if result['fields']['power'] > 20000:
+                logging.warning(f"Discarding unrealistic high power reading from OWL. "
+                                f"Reading: {result}")
+                result = None
         elif sensor_device.type_string.lower().startswith("rubicson"):
             # Temperature monitor device
             meas = BresserHygrometerMeasurement(event, acq_timestamp)
