@@ -116,16 +116,33 @@ class Measure(Publisher):
         try:
             reading: dict = self._measurements.get(block=True, timeout=timeout)
         except queue.Empty:
-            msg = f"Timeout {timeout}sec. No readings from Owl. Disconnected."
-            logging.exception(msg)
+            msg = f"Timeout {timeout}sec. No readings from any sensors. Disconnected?"
+            logging.warning(msg)
             raise TimeoutError(msg)
         return reading
 
     def _callback_rfxtrx433(self, event: RFXtrx.SensorEvent) -> None:
-        reading = self._sensor_event_to_dict(event)
+        """Callback method from RXFtrx with event update.
+
+        This is called from the RFXtrx polling thread when an event has
+        been received and decoded by the sensor.
+        Parse the event object into a dictionary that influxdb can use and
+        put the result dictionary on to a queue to be consumed by the recording
+        thread.
+
+        Importantly this function must handle all exceptions to avoid crashing the
+        RFXtrx polling thread
+        """
         try:
-            if reading is not None:
-                self._measurements.put(reading, block=False)
+            reading = self._sensor_event_to_dict(event)
+        except Exception:
+            logging.exception("Caught and handling exception in callback "
+                              f"when parsing sensor event: {event}")
+            reading = None
+        if reading is None:
+            return
+        try:
+            self._measurements.put(reading, block=False)
         except queue.Full:
             logging.exception(
                 "Owl measurement queue is full. Dropping data. Is consumer side stuck?"
@@ -133,13 +150,17 @@ class Measure(Publisher):
 
     def _sensor_event_to_dict(self, event: RFXtrx.SensorEvent) -> dict | None:
         acq_timestamp: datetime.datetime = datetime.datetime.now(datetime.timezone.utc)
+        if not isinstance(event, RFXtrx.SensorEvent):
+            logging.warning(f"Received unexpected event type from RFXtrx: "
+                            f"{type(event)} Event IGNORED: {event}")
+            return
         sensor_data: dict = event.values
         sensor_device: RFXtrx.RFXtrxDevice = event.device
         logging.debug(sensor_device)
         logging.debug(sensor_data)
 
         result = None
-        if sensor_device.type_string.startswith("ELEC"):
+        if sensor_device.type_string.lower().startswith("elec"):
             # Energy meter measurement captured
             result = {
                 "measurement": "Electricity",
@@ -159,13 +180,14 @@ class Measure(Publisher):
                 "time": datetime.datetime.now(datetime.timezone.utc),
             }
             # logging.debug(result)
-        elif sensor_device.type_string.startswith("Rubicson"):
+        elif sensor_device.type_string.lower().startswith("rubicson"):
             # Temperature monitor device
             meas = BresserHygrometerMeasurement(event, acq_timestamp)
             # logging.debug(meas)
             result = meas.to_influxdb_dict()
         else:
-            logging.warning(f"Unrecognised sensor device: {sensor_device.type_string}")
+            logging.warning(f"Unrecognised sensor device: {sensor_device.type_string}"
+                            f" Event: {event}")
         logging.debug(result)
         return result
 

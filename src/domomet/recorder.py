@@ -38,7 +38,8 @@ class InfluxDbRecorder:
                             measurement: dict = self._sensor.get_reading()
                         except TimeoutError:
                             continue
-                        logging.debug(f"Got measurement: \n{pformat(measurement)}")
+                        logging.info("Got measurement for recording: \n"
+                                     f"{pformat(measurement)}")
                         idb_writer.write(
                             self._influxdb_measurement_buckets[
                                 measurement["measurement"]
