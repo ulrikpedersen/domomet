@@ -28,6 +28,10 @@
     "url": "https://ulrikpedersen.github.io/domomet/docs/"
   },
   {
+    "version": "homekit",
+    "url": "https://ulrikpedersen.github.io/domomet/homekit/"
+  },
+  {
     "version": "src",
     "url": "https://ulrikpedersen.github.io/domomet/src/"
   },
