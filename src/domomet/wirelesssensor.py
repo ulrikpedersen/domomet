@@ -170,15 +170,19 @@ class Measure(Publisher):
                 },
                 "fields": {
                     "power": sensor_data["Energy usage"],  # Watt (int)
-                    "consumption_total": sensor_data[
-                        "Total usage"
-                    ],  # Watt-hours Wh (float)
+                    # "consumption_total": # See below. Watt-hours Wh (float)
                     "signal_strenght": sensor_data["Rssi numeric"],  # 0-9(?) (int)
                     "sensor_battery": sensor_data["Battery numeric"],  # 0-x(?) (int)
                 },
                 "time": datetime.datetime.now(datetime.timezone.utc),
             }
-            # logging.debug(result)
+            if sensor_data["Count"] == 0:
+                result["fields"].update({"consumption_total":  # Watt-hours Wh (float)
+                                         sensor_data["Total usage"]})
+            else:
+                logging.warning("Disregarding Total usage reading as Count!=0 from "
+                                f"Device: {sensor_device} Reading: {sensor_data}")
+            logging.debug("Parsed Event: %s", result)
             # SANITY DATA CHECK: sometimes the OWL report power at or above 1MW which
             # is unlikely to be real but really mess with the stats in the DB.
             # Discard the data point if higher than 20KW
