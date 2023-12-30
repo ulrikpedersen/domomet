@@ -210,16 +210,42 @@ class BresserHygrometerMeasurement:
         return result
 
     @staticmethod
-    def apply_calibration(location, temperature, humidity) -> tuple:
+    def apply_calibration(
+        location: str, temperature: float, humidity: float
+    ) -> tuple[float, float]:
+        """
+        Apply calibration offsets to the temperature and humidity measurements based on
+        the given location. If the location is not found in the calibration table, the
+        measurements are returned unmodified.
+
+        Args:
+            location (str): The location for which the calibration offsets should be
+                            applied.
+            temperature (float): The temperature measurement.
+            humidity (float): The humidity measurement.
+
+        Returns:
+            tuple: A tuple containing the calibrated temperature and humidity
+            measurements.
+        """
+        if location not in BresserHygrometerMeasurement.CALIBRATION_TABLE:
+            logging.debug(
+                f"Location {location} not found in calibration table. "
+                f"Using uncalibrated values."
+            )
+            return (temperature, humidity)
+
         calibrated_temperature = (
-            temperature +
-            BresserHygrometerMeasurement.CALIBRATION_TABLE[location][
+            temperature
+            + BresserHygrometerMeasurement.CALIBRATION_TABLE[location][
                 "temperature_offset"
             ]
         )
         calibrated_humidity = (
-            humidity +
-            BresserHygrometerMeasurement.CALIBRATION_TABLE[location]["humidity_offset"]
+            humidity
+            + BresserHygrometerMeasurement.CALIBRATION_TABLE[location][
+                "humidity_offset"
+            ]
         )
         return (calibrated_temperature, calibrated_humidity)
 
