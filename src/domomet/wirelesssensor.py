@@ -66,6 +66,7 @@ class ThermometerLocations:
                 "bedroom": ("89:01", datetime.now()),
                 "conservatory": ("18:02", datetime.now()),
                 "garden": ("bb:03", datetime.now()),
+                "dining": ("40:01", datetime.now()),
             }
             cls._instance._sensor_id_regexp = re.compile(r"^[0-9a-f]{2}:0[0-3]{1}$")
         return cls._instance
