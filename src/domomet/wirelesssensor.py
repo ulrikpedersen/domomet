@@ -230,7 +230,7 @@ class BresserHygrometerMeasurement:
         """
         Apply calibration offsets to the temperature and humidity measurements based on
         the given location. If the location is not found in the calibration table, the
-        measurements are returned unmodified.
+        measurements are returned unmodified but as floating point values.
 
         Args:
             location (str): The location for which the calibration offsets should be
@@ -247,7 +247,7 @@ class BresserHygrometerMeasurement:
                 f"Location {location} not found in calibration table. "
                 f"Using uncalibrated values."
             )
-            return (temperature, humidity)
+            return (float(temperature), float(humidity))
 
         calibrated_temperature = (
             temperature
