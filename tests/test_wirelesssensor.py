@@ -36,7 +36,7 @@ def test_is_sensor_id_new_new():
 def test_sensor_new_sensor_id_in_bedroom():
     sensor = ThermometerLocations()
     ten_minutes_ago = datetime.now() - timedelta(minutes=10)
-    sensor.last_readings.update({'bedroom': ('89:01', ten_minutes_ago)})
+    sensor.last_readings.update({"bedroom": ("89:01", ten_minutes_ago)})
     is_new = sensor.is_sensor_id_new("44:01")
     assert is_new
 

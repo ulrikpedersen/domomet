@@ -10,9 +10,11 @@ from .sensor import Publisher
 
 # If you get a new sensor, set its address to 1, 2, or 3 and add it
 # to this dictionary with the location it is expected to be placed in.
-SENSOR_LOCATIONS = {"01": ["bedroom", "dining"],
-                    "02": ["conservatory"],
-                    "03": ["garden"]}
+SENSOR_LOCATIONS = {
+    "01": ["bedroom", "dining"],
+    "02": ["conservatory"],
+    "03": ["garden"],
+}
 
 
 class ThermometerLocations:
@@ -54,14 +56,16 @@ class ThermometerLocations:
 
     def __new__(cls):
         if cls._instance is None:
-            logging.debug("Creating and initialising the original instance "
-                          "of ThermometerLocations")
+            logging.debug(
+                "Creating and initialising the original instance "
+                "of ThermometerLocations"
+            )
             cls._instance = super(ThermometerLocations, cls).__new__(cls)
             # One-time initialisation here:
             cls._instance.last_readings: dict[str, tuple[str, datetime]] = {
                 "bedroom": ("89:01", datetime.now()),
                 "conservatory": ("18:02", datetime.now()),
-                "garden": ("bb:03", datetime.now())
+                "garden": ("bb:03", datetime.now()),
             }
             cls._instance._sensor_id_regexp = re.compile(r"^[0-9a-f]{2}:0[0-3]{1}$")
         return cls._instance
@@ -100,32 +104,42 @@ class ThermometerLocations:
                     return location
 
         # Address is new. Find a location for it
-        locations = SENSOR_LOCATIONS[sensor_id.split(':')[-1]]
-        logging.debug("New sensor ID detected: '%s' Sensor expected in locations: %s",
-                      sensor_id, locations)
+        locations = SENSOR_LOCATIONS[sensor_id.split(":")[-1]]
+        logging.debug(
+            "New sensor ID detected: '%s' Sensor expected in locations: %s",
+            sensor_id,
+            locations,
+        )
         for location in locations:
             if location in self.last_readings:
                 # Check if the last reading for this location is older than 5 minutes
                 # If so, update the address and timestamp
                 last_timestamp = self.last_readings[location][1]
                 if datetime.now() - last_timestamp > timedelta(minutes=5):
-                    logging.info("Temperature sensor in location: %s has reading older"
-                                 " than 5 minutes. Updating with new sensor ID: '%s'",
-                                 location, sensor_id)
+                    logging.info(
+                        "Temperature sensor in location: %s has reading older"
+                        " than 5 minutes. Updating with new sensor ID: '%s'",
+                        location,
+                        sensor_id,
+                    )
                     self.last_readings.update({location: (sensor_id, datetime.now())})
                     return location
             else:
                 # Location is new. Register it and return
-                logging.info("Registering new location: '%s' for sensor ID: '%s'",
-                             location, sensor_id)
+                logging.info(
+                    "Registering new location: '%s' for sensor ID: '%s'",
+                    location,
+                    sensor_id,
+                )
                 self.last_readings.update({location: (sensor_id, datetime.now())})
                 return location
 
         # No location found. Register the address as unknown and return
         unknown_location = f"UNKNOWN-{sensor_id}"
-        logging.warning("Can't determine location for new sensor ID."
-                        "Registering location: '%s'",
-                        unknown_location)
+        logging.warning(
+            "Can't determine location for new sensor ID." "Registering location: '%s'",
+            unknown_location,
+        )
         self.last_readings.update({unknown_location: (sensor_id, datetime.now())})
         return unknown_location
 
@@ -302,8 +316,10 @@ class Measure(Publisher):
         try:
             reading = self._sensor_event_to_dict(event)
         except Exception:
-            logging.exception("Caught and handling exception in callback "
-                              f"when parsing sensor event: {event}")
+            logging.exception(
+                "Caught and handling exception in callback "
+                f"when parsing sensor event: {event}"
+            )
             reading = None
         if reading is None:
             return
@@ -317,8 +333,10 @@ class Measure(Publisher):
     def _sensor_event_to_dict(self, event: RFXtrx.SensorEvent) -> dict | None:
         acq_timestamp: datetime = datetime.now(timezone.utc)
         if not isinstance(event, RFXtrx.SensorEvent):
-            logging.warning(f"Received unexpected event type from RFXtrx: "
-                            f"{type(event)} Event IGNORED: {event}")
+            logging.warning(
+                f"Received unexpected event type from RFXtrx: "
+                f"{type(event)} Event IGNORED: {event}"
+            )
             return
         sensor_data: dict = event.values
         sensor_device: RFXtrx.RFXtrxDevice = event.device
@@ -343,18 +361,27 @@ class Measure(Publisher):
                 "time": datetime.now(timezone.utc),
             }
             if sensor_data["Count"] == 0:
-                result["fields"].update({"consumption_total":  # Watt-hours Wh (float)
-                                         sensor_data["Total usage"]})
+                result["fields"].update(
+                    {
+                        "consumption_total": sensor_data[  # Watt-hours Wh (float)
+                            "Total usage"
+                        ]
+                    }
+                )
             else:
-                logging.warning("Disregarding Total usage reading as Count!=0 from "
-                                f"Device: {sensor_device} Reading: {sensor_data}")
+                logging.warning(
+                    "Disregarding Total usage reading as Count!=0 from "
+                    f"Device: {sensor_device} Reading: {sensor_data}"
+                )
             logging.debug("Parsed Event: %s", result)
             # SANITY DATA CHECK: sometimes the OWL report power at or above 1MW which
             # is unlikely to be real but really mess with the stats in the DB.
             # Discard the data point if higher than 20KW
-            if result['fields']['power'] > 20000:
-                logging.warning(f"Discarding unrealistic high power reading from OWL. "
-                                f"Reading: {result}")
+            if result["fields"]["power"] > 20000:
+                logging.warning(
+                    f"Discarding unrealistic high power reading from OWL. "
+                    f"Reading: {result}"
+                )
                 result = None
         elif sensor_device.type_string.lower().startswith("rubicson"):
             # Temperature monitor device
@@ -362,8 +389,10 @@ class Measure(Publisher):
             # logging.debug(meas)
             result = meas.to_influxdb_dict()
         else:
-            logging.warning(f"Unrecognised sensor device: {sensor_device.type_string}"
-                            f" Event: {event}")
+            logging.warning(
+                f"Unrecognised sensor device: {sensor_device.type_string}"
+                f" Event: {event}"
+            )
         logging.debug(result)
         return result
 
