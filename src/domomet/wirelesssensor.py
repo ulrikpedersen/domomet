@@ -169,6 +169,7 @@ class BresserHygrometerMeasurement:
         "bedroom": {"temperature_offset": -0.3, "humidity_offset": 0.0},
         "conservatory": {"temperature_offset": 1.0, "humidity_offset": 2.0},
         "garden": {"temperature_offset": 1.0, "humidity_offset": 0.0},
+        "dining": {"temperature_offset": 0.2, "humidity_offset": -2.0},
     }
 
     def __init__(
